@@ -121,7 +121,7 @@ cd frontend && npm run build        # static files in frontend/dist
 
 ## API reference
 
-All `/api/vehicles/**` routes require `Authorization: Bearer <token>`. Errors share one shape:
+All `/api/vehicles/**` routes require an `Authorization: Bearer <token>` header. Errors share one shape:
 `{ "error": { "code": "VALIDATION_ERROR", "message": "…", "details": [{ "path": "price", "message": "…" }] } }`
 
 | Method | Endpoint | Access | Description | Success |
@@ -158,14 +158,28 @@ cd frontend && npm test
 
 ## Test report
 
-> Paste the real output from your machine here before submitting.
+> Backend — npm test -- --runInBand --cacheDirectory=.jest-cache
+Test Suites: 9 passed, 9 total
+Tests:       130 passed, 130 total
+
+Backend — npm run build
+Passed — TypeScript production build
+
+Frontend — npm test
+Test Files  4 passed (4)
+Tests       31 passed (31)
+
+Frontend — npm run build
+Passed — TypeScript check and Vite production build
 
 ```text
-$ cd backend && npm run test:coverage
-<paste output>
+$ cd backend && npm test -- --runInBand --cacheDirectory=.jest-cache
+Test Suites: 9 passed, 9 total
+Tests:       130 passed, 130 total
 
 $ cd frontend && npm test
-<paste output>
+Test Files  4 passed (4)
+Tests       31 passed (31)
 ```
 
 ## Design decisions
@@ -191,19 +205,23 @@ $ cd frontend && npm test
 
 ## My AI Usage
 
-> ⚠️ **Edit this section so it describes what *you* actually did.** The brief requires an honest account. The text below is a starting draft.
+> Tools used: Claude (Anthropic) helped me build the initial project. I also used OpenAI Codex for the final requirements review, test and build checks, screenshots, and submission documentation.
 
-**Tools used:** Claude (Anthropic) via the Claude chat interface. _<add any others: Copilot, ChatGPT, Gemini …>_
+How I used them
 
-**How I used them**
-- Gave Claude the kata brief and asked it to generate the initial project: backend architecture (routes → controllers → services → repositories), Zod schemas, JWT/RBAC middleware, SQLite schema, the Jest/Supertest test suites, the React + Tailwind frontend, and this README.
-- _<describe what you changed yourself: bugs you fixed, features you added, tests you wrote, refactors>_
-- _<describe how you verified the work: ran the suites, manual testing in the browser, code review>_
+I gave Claude the kata brief and used it to generate the full-stack implementation: the TypeScript and Express backend, SQLite persistence, Zod validation, JWT authentication and role checks, backend tests, and React/Tailwind frontend.
 
-**Reflection**
-- _<what AI did well – e.g. boilerplate, edge-case test ideas, consistent structure>_
-- _<where it needed correction or review – e.g. things you caught, assumptions you changed>_
-- _<what you learned and what you would do differently>_
+For final review, I asked Codex to compare the project with the rubric and check the prepared copy. The backend suite passed 130 tests across 9 suites, the frontend suite passed 31 tests across 4 files, and both production builds passed.
+
+I used those results to support the project’s test report rather than relying only on feature descriptions in the README.
+
+Reflection
+
+Claude helped me turn a broad full-stack brief into a working starting point quickly. It was especially useful for generating the repeated structure across the API layers, validation, tests, and user interface.
+
+The main lesson was that generated code and a complete submission are different things. Behavior needs to be checked, and evidence such as test results, original AI prompts, and Git history needs to be preserved separately.
+
+If I were starting again, I would work through one requirement at a time, ask for a test before its implementation, review each change, and preserve the Git history and raw AI prompts from the beginning. The project archive I reviewed did not include Git history or the original AI chat logs, so I cannot demonstrate the test-first commit sequence from that archive. The original prompts are included in PROMPTS.md.
 
 Raw chat logs are in [`PROMPTS.md`](PROMPTS.md). Commits that involved AI carry a `Co-authored-by` trailer.
 
